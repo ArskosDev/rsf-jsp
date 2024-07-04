@@ -21,11 +21,30 @@ export default function TopNav() {
                             type="text"
                             onChange={handleSearchName}
                             className="w-full pl-3 my-2 bg-transparent placholder-[#838383] text-[15px] focus:outline-none"
-                            placeholder="Chercher compte"
-                        >
+                            placeholder="Chercher compte">
+                        
                             
                         </input>
+                        <div className="absolute bg-white max-w-[910px] h-auto w-full z-20 left-0">
+                            <div className="p-1">
+                                <a 
+                                    href={`/profile/1`}
+                                    className="flex items-center justify-between w-full cursor-pointer hover:bg-[#F12B56] p-1 px-2 hover:text-white"
+                                    >
+                                    
+                                    <div className="flex items-center">
+                                        <img className="rounded-md" width="40" src="https://placehold.co/40"/>
+                                        <div className="truncate ml-2"> The Real South Face</div>
+                                    </div>
+                                </a>
+                                
+
+                                
+                            </div>
+                        </div>
                     </div>
+                        
+                    
                 </div>
             </div>
         </>

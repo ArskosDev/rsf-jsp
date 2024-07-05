@@ -1,4 +1,6 @@
 import { usePathname, useRouter } from "next/navigation"
+import { AiOutlinePlus } from "react-icons/ai";
+import { BiSearch } from "react-icons/bi";
 
 export default function TopNav() {
     const router = useRouter();
@@ -8,24 +10,26 @@ export default function TopNav() {
         console.log(event.target.value)
     }
 
+    const goTo = () => {
+        console.log('here')
+    }
+
     return (
         <>
             <div id="TopNav" className="fixed bg-white z-30 flex items-center w-full border-b h-[60px]">
                 <div className={`flex items-center justify-between gap-6 w-full px-4 mx-auto ${pathname === '/' ? 'max-w-[1150px]' : ''}`}>
                     
                     <a href="/">
-                        <img className="min-w-[115px] w-[115px]" src="/images/tiktok-logo.png"></img>
+                        <img className="min-w-[115px] w-[115px]" src="/images/tiktok-logo.png"/>
                     </a>
                     <div className="relative hidden md:flex items-center justify-end bg-[#F1F1F2] p-1 rounded-full max-w-[430px]">
                         <input 
                             type="text"
                             onChange={handleSearchName}
                             className="w-full pl-3 my-2 bg-transparent placholder-[#838383] text-[15px] focus:outline-none"
-                            placeholder="Chercher compte">
+                            placeholder="Chercher compte"/>
                         
-                            
-                        </input>
-                        <div className="absolute bg-white max-w-[910px] h-auto w-full z-20 left-0">
+                        <div className="absolute bg-white max-w-[910px] h-auto w-full z-20 left-0 top-12 border p-1">
                             <div className="p-1">
                                 <a 
                                     href={`/profile/1`}
@@ -36,12 +40,25 @@ export default function TopNav() {
                                         <img className="rounded-md" width="40" src="https://placehold.co/40"/>
                                         <div className="truncate ml-2"> The Real South Face</div>
                                     </div>
-                                </a>
-                                
-
-                                
+                                </a>                           
                             </div>
                         </div>
+                        <div className="px-3 py-1 flex items-center border-l border-l-gray-300">
+                            <BiSearch color="#A1A2A7" size="22"/>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={() => goTo()}
+                            className="flex items-center border rounded-sm py[6px] hover:gb-gray-100 pl-1.5"
+                        >
+                            <AiOutlinePlus color="#000000" size="22"/>
+                            <span className="px-2 font-medium text-[15px]">Charger</span>
+                                
+
+                        </button>
+
                     </div>
                         
                     

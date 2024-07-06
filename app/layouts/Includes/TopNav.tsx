@@ -1,6 +1,9 @@
+import { Span } from "next/dist/trace";
 import { usePathname, useRouter } from "next/navigation"
 import { AiOutlinePlus } from "react-icons/ai";
-import { BiSearch } from "react-icons/bi";
+import { BiSearch, BiUser } from "react-icons/bi";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FiLogOut } from "react-icons/fi";
 
 export default function TopNav() {
     const router = useRouter();
@@ -58,6 +61,45 @@ export default function TopNav() {
                                 
 
                         </button>
+
+                       { true ? (
+
+                            <div className="flex items-center">
+                                <button
+                                    className="flex items-center bg-[#F02C56] text-white border rounded-md px-3 py-[6px]"
+                                >
+                                    <span className="whitespace-nowrap mx-4 front">Connexion</span>
+
+                                </button>
+                                <BsThreeDotsVertical color="#161724" size="25"/>
+                            </div>
+                        
+                            ): (
+                                <div className="flex items-center">
+                                    <div className="relative">
+                                        <button className="mt-1 border border-gray-200 rounded rounded-full">
+                                            <img className="rounded-full w-[35px] " src="https://placehold.co/35"  />
+                                        </button>
+
+                                        <div className="absolute bg-white rounded-lg py-1.5 w-[200px] shadow-xl border top-[40px] right-0">
+                                            <button className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer">
+                                                <BiUser size="20"/>
+                                                <span className="pl-2 font-semibold text-sm">Profile</span>
+
+                                            </button>
+                                            <button className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer">
+                                                <FiLogOut size="20"/>
+                                                <span className="pl-2 font-semibold text-sm">Deconnexion</span>
+
+                                            </button>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                       )}
 
                     </div>
                         

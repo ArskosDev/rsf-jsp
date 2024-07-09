@@ -58,6 +58,7 @@ export default function PostMain({ post}: PostMainCompType) {
                                 loop
                                 controls
                                 muted
+                                className=""
                             />
 
                         </div>

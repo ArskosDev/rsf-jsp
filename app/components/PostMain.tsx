@@ -5,6 +5,7 @@ import { PostMainCompType } from "../types";
 import Link from "next/link";
 import { ImMusic } from "react-icons/im";
 import { AiFillHeart } from "react-icons/ai";
+import PostMainLikes from "./PostMainLikes";
 
 export default function PostMain({ post}: PostMainCompType) {
 
@@ -58,10 +59,18 @@ export default function PostMain({ post}: PostMainCompType) {
                                 loop
                                 controls
                                 muted
-                                className=""
+                                className="rounded-xl objet-cover mx-auto h-full"
+                                src={post?.video_url}
                             />
-
+                            <img 
+                                className="absolute right-2 bottom-10"
+                                width="60"
+                                src="/images/rsf-logo.png" 
+                            />
+                            
                         </div>
+
+                        <PostMainLikes post={post} />
 
                     </div>
 

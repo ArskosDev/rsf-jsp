@@ -4,7 +4,7 @@ import { AiFillHeart } from "react-icons/ai";
 import { BiLoaderCircle } from "react-icons/bi";
 import { Router } from "next/router";
 import { useRouter } from "next/navigation";
-import { FaCommentDots } from "react-icons/fa";
+import { FaCommentDots, FaShare } from "react-icons/fa";
 
 export default function PostMainLikes({ post}: PostMainLikesCompType) {
 
@@ -13,7 +13,7 @@ export default function PostMainLikes({ post}: PostMainLikesCompType) {
     const [hasClickedLike, setHasClickedLike] = useState<boolean>(false)
     const [userLiked, setUserLiked] = useState<boolean>(false)
     const [likes, setLikes] = useState<Like[]>([])
-    const [comments, setComments] = useState<Like[]>([])
+    const [comments, setComments] = useState<Comment[]>([])
 
     const likeOrUnlike = () => {
         console.log('likeOrUnlike')
@@ -57,7 +57,17 @@ export default function PostMainLikes({ post}: PostMainLikesCompType) {
                         <span className="text-xs text-gray-800 font-semibold">
 
                             {comments?.length}
+                        </span>
+                    </button>
 
+                    <button className=" text-center">
+                        <div className="rounded-full bg-gray-200 p-2 cursor-pointer">
+                            <FaShare size="25" />
+
+                        </div>
+                        <span className="text-xs text-gray-800 font-semibold">
+
+                            55
                         </span>
                     </button>
 

@@ -11,6 +11,15 @@ export interface Like{
 
 }
 
+export interface Comment{
+    id: string;
+    user_id: string;
+    post_id: string;
+    text: string;
+    created_at: string;
+
+}
+
 
 export interface PostWithProfile {
     id: string,

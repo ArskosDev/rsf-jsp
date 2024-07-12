@@ -54,6 +54,10 @@ export interface PostMainLikesCompType {
     post: PostWithProfile
 }
 
+export interface ProfilePageTypes {
+    params: { id: string; };
+}
+
 
 // LAYOUT INCLUDE TYPES
 

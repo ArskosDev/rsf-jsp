@@ -65,7 +65,7 @@ export default function PostMain({ post}: PostMainCompType) {
                             <img 
                                 className="absolute right-2 bottom-10"
                                 width="60"
-                                src="/images/rsf-logo.png" 
+                                src="/images/RSF-logo-3.png" 
                             />
                             
                         </div>

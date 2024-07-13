@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Like, PostMainLikesCompType } from "../types";
+import { Like, PostMainLikesCompTypes } from "../types";
 import { AiFillHeart } from "react-icons/ai";
 import { BiLoaderCircle } from "react-icons/bi";
 import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 import { FaCommentDots, FaShare } from "react-icons/fa";
 
-export default function PostMainLikes({ post}: PostMainLikesCompType) {
+export default function PostMainLikes({ post}: PostMainLikesCompTypes) {
 
     const router = useRouter()
 

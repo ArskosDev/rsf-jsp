@@ -1,13 +1,13 @@
  'use client';
 
 import React, {useEffect } from "react";
-import { PostMainCompType } from "../types";
+import { PostMainCompTypes } from "../types";
 import Link from "next/link";
 import { ImMusic } from "react-icons/im";
 import { AiFillHeart } from "react-icons/ai";
 import PostMainLikes from "./PostMainLikes";
 
-export default function PostMain({ post}: PostMainCompType) {
+export default function PostMain({ post}: PostMainCompTypes) {
 
     useEffect(() => {
         const video = document.getElementById(`video-${post?.id}`) as HTMLVideoElement

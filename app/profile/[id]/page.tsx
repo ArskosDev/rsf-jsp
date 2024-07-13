@@ -1,8 +1,10 @@
 "use client"
 
 import ClientOnly from "@/app/components/ClientOnly"
+import PostUser from "@/app/components/profile/PostUser"
 import MainLayout from "@/app/layouts/MainLayout"
 import { ProfilePageTypes } from "@/app/types"
+import { BsPencil } from "react-icons/bs"
 
 export default function Profile({ params }: ProfilePageTypes){
 
@@ -45,10 +47,66 @@ export default function Profile({ params }: ProfilePageTypes){
                                 )}
                             </ClientOnly>
 
+                            {true ? (
+                                <button
+                                    className="flex item-center rounded-md py-1.5 px-3.5 mt-3 text-[15px] font-semibold border hover-bg-gray-100 ">
+                                        <BsPencil className="mt-0.5 mr-1" size="18"/>
+                                        <span>Editer Profile</span>
+                                </button>
+                            ) : (
+                                <button
+                                    className="flex item-center rounded-md py-1.5 px-8 mt-3 text-white font-semibold bg-[#F02C56]">
+                                        Suivre
+                                    </button>
+
+                            )}
+
                         </div>
 
                     </div>
 
+                    <div className="flex items-center pt-4">
+                        <div className="mr-4">
+                            <span className="font-bold">10k</span>
+                            <span className=" text-gray-500 font-light text-[15px] pl-1.5"> Suivis </span>
+
+                        </div>
+                        <div className="mr-4">
+                            <span className="font-bold">44k</span>
+                            <span className=" text-gray-500 font-light text-[15px] pl-1.5"> Followers </span>
+
+                        </div>
+                        <div className="mr-4">
+                            <span className="font-bold">7k</span>
+                            <span className=" text-gray-500 font-light text-[15px] pl-1.5"> J'aime </span>
+
+                        </div>
+
+
+                    </div>
+
+                    <ClientOnly>
+                        <p className="pt- mr-4 text-gray-500 font-light text-[15px] pl-1.5 msx-w-[500px]">
+                            {currentProfile?.bio}
+
+                        </p>
+                    </ClientOnly>
+
+                    <ul className="w-full flex items-center pt4 border-b">
+                        <li className="w-60 text-center py-2 text-[17px] font-semibold border-b-2 border-b-black">Videos</li>
+                        <li className="w-60 text-gray-500 text-center py-2 text-[17px] font-semibold">J'aime</li>
+                    </ul>
+                    <ClientOnly >
+                        <div className="mt-4 grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3">
+                            <PostUser post={{
+                                id: '123',
+                                user_id: '345',
+                                video_url: '/beach.mp4',
+                                text: 'Ceci est un post',
+                                created_at: 'date here'
+                            }} />
+                        </div>                        
+                    </ClientOnly>
                 </div>
 
             </MainLayout>

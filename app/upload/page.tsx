@@ -137,7 +137,7 @@ import { PiKnifeLight } from "react-icons/pi";
                                 <img 
                                     className="absolute right-5 bottom-6 z-20"
                                     width="90"
-                                    src="/images/RSF-logo-2.png" 
+                                    src="/images/RSF-logo-3.png" 
                                 />
 
                                 <video 

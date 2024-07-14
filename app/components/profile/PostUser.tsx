@@ -17,7 +17,7 @@ export default function PostUser({ post}: PostUserCompTypes) {
 
         setTimeout(() => {
             video.addEventListener('mouseenter', () => { video.play() })
-            video.addEventListener('mousleave', () => { video.pause() })            
+            video.addEventListener('mouseleave', () => { video.pause() })            
         }, 50)
         
     }, [])
@@ -50,6 +50,7 @@ export default function PostUser({ post}: PostUserCompTypes) {
                     </p>
                     <div className="flex items-center gap-1 gap-1 -ml-1 text-gray-600 font-bold text-xs">
                         <SiSoundcharts size="16"/>
+                        3%
                         <BiErrorCircle size="16"/>
 
                     </div>

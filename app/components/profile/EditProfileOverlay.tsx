@@ -5,12 +5,15 @@ import { AiOutlineClose } from "react-icons/ai";
 import { BsPencil } from "react-icons/bs";
 import { LuTextCursorInput } from "react-icons/lu";
 import TextInput from "../TextInput";
+import { Cropper } from 'react-advanced-cropper';
+import 'react-advanced-cropper/dist/style.css';
+import { BiLoaderCircle } from "react-icons/bi";
 
 export default function EditProfileOverlay(){
     const router = useRouter()
 
     const [file, setFile] = useState <File | null>(null);
-    const [cropper, setCopper] = useState <CropperDimensions | null >(null);
+    const [cropper, setCropper] = useState <CropperDimensions | null >(null);
     const [uploadedImage, setUploadedImage] = useState<string | null >(null);
     const [userImage, setUserImage] = useState<string | ''>('https://placehold.co/100');
     const [userName, setUserName] = useState<string | ''>('');
@@ -18,8 +21,41 @@ export default function EditProfileOverlay(){
     const [isUpdating, setIsUpdating] = useState(false);
     const [error, setError] = useState<ShowErrorObject | null>(null);
 
-    const getUploadedImage = () => {
-        console.log('getUploadedImage')
+    const getUploadedImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = event.target.files && event.target.files[0];
+        
+        if (selectedFile) {
+            setFile(selectedFile);
+            setUploadedImage(URL.createObjectURL(selectedFile));
+        } else {
+            setFile(null);
+            setUploadedImage(null);
+        }
+    }
+
+    const cropAndUpdateImage = async () => {
+        console.log('cropAndUpdareImage')
+        /* let isError = validate()
+        if (isError) return
+        if (!contextUser?.user) return
+
+        try {
+            if (!file) return alert('You have no file')
+            if (!cropper) return alert('You have no file')
+            setIsUpdating(true)
+
+            const newImageId = await useChangeUserImage(file, cropper, userImage)
+            await useUpdateProfileImage(currentProfile?.id || '', newImageId)
+
+            await contextUser.checkUser()
+            setCurrentProfile(contextUser?.user?.id)
+            setIsEditProfileOpen(false)
+            setIsUpdating(false)
+        } catch (error) {
+            console.log(error)
+            setIsUpdating(false)
+            alert(error)
+        } */
     }
 
     const showError = (type: string) => {
@@ -94,12 +130,18 @@ export default function EditProfileOverlay(){
                                                 <div className="sm:w-[60%] w-full max-w-md">
 
                                                     <TextInput
-                                                        string={userImage}
+                                                        string={userName}
                                                         placeholder="Username"
                                                         onUpdate={setUserName}
                                                         inputType="text"
                                                         error={showError('userName')}
                                                     />
+
+                                                    <p className={`relative text-[11px] text-gray-500 ${error ? 'mt-1' : 'mt-4'}`}>
+                                                        Les noms d'utilisateurs ne peuvent contenir que des lettres, des chiffres, et caracteres speciaux. 
+                                                        Changer votre nom d'utilisateur va affecter le lien vers votre profile.
+
+                                                    </p>
 
                                                 </div>
 
@@ -107,18 +149,108 @@ export default function EditProfileOverlay(){
 
                                         </div>
 
+                                        <div 
+                                            id="UserBioSection" 
+                                            className="flex flex-col sm:h-[120px]  px-1.5 py-2 mt-2 w-full"
+                                        >
+                                            <h3 className="font-semibold text-[15px] sm:mb-0 mb-1 text-gray-700 sm:w-[160px] sm:text-left text-center">
+                                                Bio
+                                            </h3>
+                                            <div className="flex items-center justify-center sm:-mt-6">
+                                        <div className="sm:w-[60%] w-full max-w-md">
+                                            <textarea 
+                                                cols={30}
+                                                rows={4}
+                                                onChange={e => setUserBio(e.target.value)}
+                                                value={userBio || ''}
+                                                maxLength={80}
+                                                className="
+                                                    resize-none
+                                                    w-full
+                                                    bg-[#F1F1F2]
+                                                    text-gray-800
+                                                    border
+                                                    border-gray-300
+                                                    rounded-md
+                                                    py-2.5
+                                                    px-3
+                                                    focus:outline-none
+                                                "
+                                            ></textarea>
+                                            <p className="text-[11px] text-gray-500">
+                                                {userBio ? userBio.length : 0}/80
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                        </div>
+
                                     </div>
 
                                 ) : (
-                                    <div>
-
-                                    </div>
+                                    <div className="w-full max-h-[420px] mx-auto bg-black circle-stencil">
+                                        <Cropper
+                                            stencilProps={{ aspectRatio: 1 }}
+                                            className="h-[400px]"
+                                            onChange={(cropper) => setCropper(cropper.getCoordinates())}
+                                            src={uploadedImage}
+                                />
+                            </div>
 
                                 )}
 
                             </div>
 
+                            <div 
+                        id="ButtonSection" 
+                        className="absolute p-5 left-0 bottom-0 border-t border-t-gray-300 w-full"
+                    >
+                        {!uploadedImage ? (
+                            <div id="UpdateInfoButtons" className="flex items-center justify-end">
+
+                                <button 
+                                    disabled={isUpdating}
+                                    //onClick={() => setIsEditProfileOpen(false)}
+                                    className="flex items-center border rounded-sm px-3 py-[6px] hover:bg-gray-100"
+                                >
+                                    <span className="px-2 font-medium text-[15px]">Cancel</span>
+                                </button>
+
+                                <button 
+                                    disabled={isUpdating}
+                                    //onClick={() => updateUserInfo()}
+                                    className="flex items-center bg-[#F02C56] text-white border rounded-md ml-3 px-3 py-[6px]"
+                                >
+                                    <span className="mx-4 font-medium text-[15px]">
+                                        {isUpdating ? <BiLoaderCircle color="#ffffff" className="my-1 mx-2.5 animate-spin" /> : "Save" }
+                                    </span>
+                                </button>
+
+                            </div>
+                        ) : (
+                            <div id="CropperButtons" className="flex items-center justify-end" >
+
+                                <button 
+                                    onClick={() => setUploadedImage(null)}
+                                    className="flex items-center border rounded-sm px-3 py-[6px] hover:bg-gray-100"
+                                >
+                                    <span className="px-2 font-medium text-[15px]">Cancel</span>
+                                </button>
+
+                                <button 
+                                    onClick={() => cropAndUpdateImage()}
+                                    className="flex items-center bg-[#F02C56] text-white border rounded-md ml-3 px-3 py-[6px]"
+                                >
+                                    <span className="mx-4 font-medium text-[15px]">
+                                        {isUpdating ? <BiLoaderCircle color="#ffffff" className="my-1 mx-2.5 animate-spin" /> : "Apply" }
+                                    </span>
+                                </button>
+
+                            </div>
+                        )}
                     </div>
+
+                </div>
 
             </div>
         </>

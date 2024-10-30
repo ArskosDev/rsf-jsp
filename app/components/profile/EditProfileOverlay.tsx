@@ -34,7 +34,7 @@ export default function EditProfileOverlay(){
     }
 
     const cropAndUpdateImage = async () => {
-        console.log('cropAndUpdareImage')
+        console.log('cropAndUpdateImage')
         /* let isError = validate()
         if (isError) return
         if (!contextUser?.user) return

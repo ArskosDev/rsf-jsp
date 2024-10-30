@@ -74,6 +74,10 @@ export interface PostMainLikesCompTypes {
     post: PostWithProfile
 }
 
+export interface PostPageTypes {
+    params: { userId: string; postId: string; };
+}
+
 export interface ProfilePageTypes {
     params: { id: string; };
 }

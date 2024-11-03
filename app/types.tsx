@@ -1,3 +1,28 @@
+
+export interface UserContextTypes {
+    user: User | null;
+    register: (name: string, email: string, password: string) => Promise<void>;
+    login: (email: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
+    checkUser: () => Promise<void>;
+}
+
+export interface User {
+    id: string;
+    name: string;
+    bio: string;
+    image: string;
+}
+
+
+export interface Profile {
+    id: string;
+    user_id: string;
+    name: string;
+    image: string;
+    bio: string;
+}
+
 export interface RandomUsers{
     id: string
     name: string
@@ -31,7 +56,7 @@ export interface Post {
     created_at: string;
 }
 
-export interface Comment{
+export interface PostComment{
     id: string;
     user_id: string;
     post_id: string;
@@ -42,17 +67,17 @@ export interface Comment{
 
 
 export interface PostWithProfile {
-    id: string,
-    user_id: string,
-    video_url: string,
-    text: string,
-    created_at: string,
-    event_name: string,
-    event_location:string,
+    id: string;
+    user_id: string;
+    video_url: string;
+    text: string;
+    created_at: string;
+    event_name?: string;
+    event_location?:string;
     profile:{
-        user_id: string,
-        name: string,
-        image: string,
+        user_id: string;
+        name: string;
+        image: string;
     }
 }
 
@@ -65,6 +90,33 @@ export interface UploadError {
 /////////////////////////////
 
 // COMPONENTS TYPES
+
+export interface CommentWithProfile {
+    id: string;
+    user_id: string;
+    post_id: string;
+    text: string;
+    created_at: string;
+    profile: {
+        user_id: string;
+        name: string;
+        image: string;
+    }
+}
+
+export interface CommentsHeaderCompTypes {
+    params: { userId: string; postId: string; };
+    post: PostWithProfile
+}
+
+export interface CommentsCompTypes {
+    params: { userId: string; postId: string; };
+}
+
+export interface SingleCommentCompTypes {
+    params: { userId: string; postId: string; };
+    comment: CommentWithProfile
+}
 
 export interface PostMainCompTypes {
     post: PostWithProfile
@@ -90,8 +142,8 @@ export interface PostUserCompTypes {
 // LAYOUT INCLUDE TYPES
 
 export interface MenuItemTypes {
-    iconString: string,
-    colorString: string,
+    iconString: string;
+    colorString: string;
     sizeString: string 
 }
 

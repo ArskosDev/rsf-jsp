@@ -1,20 +1,45 @@
+import { useUser } from "@/app/context/user";
+import useSearchProfilesByName from "@/app/hooks/useSearchProfilesByName";
+import { useGeneralStore } from "@/app/stores/general";
+import { RandomUsers } from "@/app/types";
 import { Span } from "next/dist/trace";
 import { usePathname, useRouter } from "next/navigation"
+import { useState, useEffect } from "react";
+import { debounce } from "react-advanced-cropper";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiSearch, BiUser } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 
 export default function TopNav() {
+    const contextUser = useUser()
     const router = useRouter();
     const pathname = usePathname();
 
-    const handleSearchName = (event: { target: { value: string } }) => {
-        console.log(event.target.value)
-    }
+    const [searchProfiles, setSearchProfiles] = useState<RandomUsers[]>([])
+    let [showMenu, setShowMenu] = useState<boolean>(false)
+    let { setIsLoginOpen, setIsEditProfileOpen } = useGeneralStore()
+
+    useEffect(() => { setIsEditProfileOpen(false) }, [])
+
+    const handleSearchName = debounce(async (event: { target: { value: string } }) => {
+        if (event.target.value == "") return setSearchProfiles([])
+
+        try {
+            const result = await useSearchProfilesByName(event.target.value)
+            if (result) return setSearchProfiles(result)
+            setSearchProfiles([])
+        } catch (error) {
+            console.log(error)
+            setSearchProfiles([])
+            alert(error)
+        }
+    }, 500)
 
     const goTo = () => {
-        console.log('here')
+        //console.log('here')
+        if (!contextUser?.user) return setIsLoginOpen(true)
+            router.push('/upload')
     }
 
     return (
@@ -54,18 +79,19 @@ export default function TopNav() {
                     <div className="flex items-center gap-3">
                         <button
                             onClick={() => goTo()}
-                            className="flex items-center border rounded-sm py[6px] hover:gb-gray-100 pl-1.5"
-                        >
+                            className="flex items-center border rounded-sm py[6px] hover:gb-gray-100 pl-1.5">
                             <AiOutlinePlus color="#000000" size="22"/>
                             <span className="px-2 font-medium text-[15px]">Charger</span>
                                 
 
                         </button>
 
-                       { true ? (
+                       { !contextUser?.user?.id ? (
 
                             <div className="flex items-center">
                                 <button
+                                    onClick={() => setIsLoginOpen(true)}
+
                                     className="flex items-center bg-[#F02C56] text-white border rounded-md px-3 py-[6px]"
                                 >
                                     <span className="whitespace-nowrap mx-4 front">Connexion</span>
@@ -77,24 +103,36 @@ export default function TopNav() {
                             ): (
                                 <div className="flex items-center">
                                     <div className="relative">
-                                        <button className="mt-1 border border-gray-200 rounded rounded-full">
+                                        <button 
+                                            onClick={() => setShowMenu(showMenu = !showMenu)}
+                                            className="mt-1 border border-gray-200 rounded rounded-full">
                                             <img className="rounded-full w-[35px] " src="https://placehold.co/35"  />
                                         </button>
 
+                                        {showMenu ? (
                                         <div className="absolute bg-white rounded-lg py-1.5 w-[200px] shadow-xl border top-[40px] right-0">
-                                            <button className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer">
+                                            <button 
+                                                onClick={() => { 
+                                                    router.push(`/profile/${contextUser?.user?.id}`)
+                                                    setShowMenu(false)
+                                                }}
+                                                className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer"
+                                            >
                                                 <BiUser size="20"/>
                                                 <span className="pl-2 font-semibold text-sm">Profile</span>
-
                                             </button>
-                                            <button className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer">
-                                                <FiLogOut size="20"/>
-                                                <span className="pl-2 font-semibold text-sm">Deconnexion</span>
-
+                                            <button 
+                                                onClick={async () => {
+                                                    await contextUser?.logout()
+                                                    setShowMenu(false)
+                                                }} 
+                                                className="flex items-center justify-start w-full py-3 px-1.5 hover:bg-gray-100 border-t cursor-pointer"
+                                            >
+                                                <FiLogOut size={20} />
+                                                <span className="pl-2 font-semibold text-sm">Log out</span>
                                             </button>
-
-
                                         </div>
+                                    ) : null}
 
                                     </div>
                                 </div>

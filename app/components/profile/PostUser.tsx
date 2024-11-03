@@ -7,6 +7,7 @@ import Link from "next/link";
 import { link } from "fs";
 import { SiSoundcharts } from "react-icons/si";
 import { BiErrorCircle } from "react-icons/bi";
+import useCreateBucketUrl from "@/app/hooks/useCreateBucketUrl";
 
 
 
@@ -38,7 +39,7 @@ export default function PostUser({ post}: PostUserCompTypes) {
                             muted
                             loop
                             className="aspect-[3/4] object-cover rounded-md"
-                            src={post.video_url}
+                            src={useCreateBucketUrl(post.video_url)}
                         />                    
                     </Link>
 

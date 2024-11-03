@@ -1,6 +1,6 @@
 "use client"
 
-import Comments from "@/app/components/post/Comments"
+//import Comments from "@/app/components/post/Comments"
 import CommentsHeader from "@/app/components/post/CommentsHeader"
 import Link from "next/link"
 import { useEffect } from "react"
@@ -8,7 +8,8 @@ import { AiOutlineClose } from "react-icons/ai"
 import { BiChevronDown, BiChevronUp } from "react-icons/bi"
 import { useRouter } from "next/navigation"
 import ClientOnly from "@/app/components/ClientOnly"
-import { Post, PostPageTypes } from "@/app/types"
+import { PostPageTypes } from "@/app/types"
+import Comments from "@/app/components/post/Comments"
 //import { usePostStore } from "@/app/stores/post"
 //import { useLikeStore } from "@/app/stores/like"
 //import { useCommentStore } from "@/app/stores/comment"
@@ -21,6 +22,21 @@ export default function Post({ params }: PostPageTypes) {
     let { setCommentsByPost } = useCommentStore()*/
 
     const router = useRouter()
+    const postById = {
+        id: '123',
+              user_id: '456',
+              video_url: '/beach.mp4',
+              text: 'this is some random beach',
+              created_at: 'date here',
+              event_name: 'Apousome Haya haya',
+              event_location:'Avepozo',
+              profile:{
+                user_id: '456',
+                name: 'User 1',
+                image: 'https://placehold.co/100',
+              }
+        
+    } 
 
     /*useEffect(() => { 
         setPostById(params.postId)
@@ -85,7 +101,7 @@ export default function Post({ params }: PostPageTypes) {
 
                     <ClientOnly>
 
-                        {true ? (
+                        {postById?.video_url ? (
                             <video
                                 className="fixed object-cover w-full my-auto z-[0] h-screen"
                                 src="/beach.mp4"
@@ -94,16 +110,8 @@ export default function Post({ params }: PostPageTypes) {
                         ):null}
 
 
-                        {/* {postById?.video_url ? (
-                            <video
-                                className="fixed object-cover w-full my-auto z-[0] h-screen"
-                                src={useCreateBucketUrl(postById?.video_url)}
-                            />
-                        ) : null*/}
-
                         <div className="bg-black bg-opacity-70 lg:min-w-[480px] z-10 relative">
-                            {true ?(
-                            //postById?.video_url ? (
+                            {postById?.video_url ? (
                                 <video
                                     autoPlay
                                     controls
@@ -123,9 +131,12 @@ export default function Post({ params }: PostPageTypes) {
                     <div className="py-7" />
 
                         <ClientOnly>
-                            {/*postById ? (
+                            { 
+                            postById?.video_url ? (
                                 <CommentsHeader post={postById} params={params}/>
-                            ) : null*/}
+                            ) : null
+                            
+                            }
                         </ClientOnly>
                         <Comments params={params}/>
 

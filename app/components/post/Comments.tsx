@@ -10,6 +10,8 @@ import { CommentsCompTypes } from "@/app/types"
 
 export default function Comments({ params }: CommentsCompTypes) {
 
+
+
     let { commentsByPost, setCommentsByPost } = useCommentStore()
     let { setIsLoginOpen } = useGeneralStore()
 
@@ -17,23 +19,6 @@ export default function Comments({ params }: CommentsCompTypes) {
     const [comment, setComment] = useState<string>('')
     const [inputFocused, setInputFocused] = useState<boolean>(false)
     const [isUploading, setIsUploading] = useState<boolean>(false)
-
-    const commentByPost = [
-        {
-            id: '123',
-                  user_id: '456',
-                  post_id: '987',
-                  text: 'this is some random text',
-                  created_at: 'date here',
-                  event_name: 'Apousome Haya haya',
-                  event_location:'Avepozo',
-                  profile:{
-                    user_id: '456',
-                    name: 'User 1',
-                    image: 'https://placehold.co/100',
-                  }
-        }
-    ]
 
     const addComment = async () => {
 
@@ -62,11 +47,11 @@ export default function Comments({ params }: CommentsCompTypes) {
                 <div className="pt-2"/>
 
                 <ClientOnly>
-                    {commentByPost.length < 1 ? (
+                    {commentsByPost.length < 1 ? (
                         <div className="text-center mt-6 text-xl text-gray-500">No comments...</div>
                     ) : (
                         <div>
-                            {commentByPost.map((comment: any, index: any) => (
+                            {commentsByPost.map((comment: any, index: any) => (
                                 <SingleComment key={index} comment={comment} params={params} />
                             ))}
                         </div>

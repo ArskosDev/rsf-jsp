@@ -1,6 +1,6 @@
 "use client"
 
-//import Comments from "@/app/components/post/Comments"
+
 import CommentsHeader from "@/app/components/post/CommentsHeader"
 import Link from "next/link"
 import { useEffect } from "react"
@@ -10,57 +10,43 @@ import { useRouter } from "next/navigation"
 import ClientOnly from "@/app/components/ClientOnly"
 import { PostPageTypes } from "@/app/types"
 import Comments from "@/app/components/post/Comments"
-//import { usePostStore } from "@/app/stores/post"
-//import { useLikeStore } from "@/app/stores/like"
-//import { useCommentStore } from "@/app/stores/comment"
-//import useCreateBucketUrl from "@/app/hooks/useCreateBucketUrl"
+import { usePostStore } from "@/app/stores/post"
+import { useLikeStore } from "@/app/stores/like"
+import { useCommentStore } from "@/app/stores/comment"
+import useCreateBucketUrl from "@/app/hooks/useCreateBucketUrl"
 
 export default function Post({ params }: PostPageTypes) {
 
-    /*let { postById, postsByUser, setPostById, setPostsByUser } = usePostStore()
+    let { postById, postsByUser, setPostById, setPostsByUser } = usePostStore()
     let { setLikesByPost } = useLikeStore()
-    let { setCommentsByPost } = useCommentStore()*/
+    let { setCommentsByPost } = useCommentStore()
 
     const router = useRouter()
-    const postById = {
-        id: '123',
-              user_id: '456',
-              video_url: '/beach.mp4',
-              text: 'this is some random beach',
-              created_at: 'date here',
-              event_name: 'Apousome Haya haya',
-              event_location:'Avepozo',
-              profile:{
-                user_id: '456',
-                name: 'User 1',
-                image: 'https://placehold.co/100',
-              }
-        
-    } 
+    
 
-    /*useEffect(() => { 
+    useEffect(() => { 
         setPostById(params.postId)
         setCommentsByPost(params.postId) 
         setLikesByPost(params.postId)
         setPostsByUser(params.userId) 
-    }, [])*/
+    }, [])
 
     const loopThroughPostsUp = () => {
         console.log('loopTrhoughPostUp')
-        /*postsByUser.forEach(post => {
+        postsByUser.forEach(post => {
             if (post.id > params.postId) {
                 router.push(`/post/${post.id}/${params.userId}`)
             }
-        });*/
+        });
     }
 
     const loopThroughPostsDown = () => {
         console.log('loopTrhoughPostDown')
-        /*postsByUser.forEach(post => {
+        postsByUser.forEach(post => {
             if (post.id < params.postId) {
                 router.push(`/post/${post.id}/${params.userId}`)
             }
-        });*/
+        });
     }
 
     return (
@@ -96,7 +82,7 @@ export default function Post({ params }: PostPageTypes) {
                     <img 
                         className="absolute z-20 top-[18px] left-[70px] rounded-full lg:mx-0 mx-auto" 
                         width="45" 
-                        src="/images/tiktok-logo-small.png"
+                        src="/images/RSF-logo-3.png"
                     />
 
                     <ClientOnly>
@@ -104,7 +90,7 @@ export default function Post({ params }: PostPageTypes) {
                         {postById?.video_url ? (
                             <video
                                 className="fixed object-cover w-full my-auto z-[0] h-screen"
-                                src="/beach.mp4"
+                                src={useCreateBucketUrl(postById.video_url)}
                             
                             />
                         ):null}
@@ -118,8 +104,8 @@ export default function Post({ params }: PostPageTypes) {
                                     loop
                                     muted
                                     className="h-screen mx-auto"
-                                    src="/beach.mp4"
-                                    //src={useCreateBucketUrl(postById.video_url)}
+                                    
+                                    src={useCreateBucketUrl(postById.video_url)}
                                 />
                             ) : null}
                         </div> 

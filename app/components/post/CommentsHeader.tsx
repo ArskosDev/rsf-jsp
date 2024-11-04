@@ -19,6 +19,8 @@ import useDeleteLike from "@/app/hooks/useDeleteLike";
 import useDeletePostById from "@/app/hooks/useDeletePostById";
 import useCreateBucketUrl from "@/app/hooks/useCreateBucketUrl";
 
+import moment from "moment"
+
 
 export default function CommentsHeader({ post, params }: CommentsHeaderCompTypes) {
 
@@ -134,7 +136,7 @@ export default function CommentsHeader({ post, params }: CommentsHeaderCompTypes
                         <div className="relative z-0 text-[13px] -mt-5 font-light">
                             {post?.profile.name}
                             <span className="relative -top-[2px] text-[30px] pl-1 pr-0.5 ">.</span>
-                            <span className="font-medium">{post?.created_at}</span>
+                            <span className="font-medium">{moment(post?.created_at).calendar()}</span>
                         </div>
                     </div>
                 </div>

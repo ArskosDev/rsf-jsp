@@ -3,23 +3,31 @@ import { usePathname } from "next/navigation"
 import MenuItem from "./MenuItem"
 import ClientOnly from "@/app/components/ClientOnly"
 import MenuItemFollow from "./MenuItemFollow";
+import { useGeneralStore } from "@/app/stores/general";
+import { useUser } from "@/app/context/user";
+import { useEffect } from "react";
+import Link from "next/link";
 
 
 export default function SideNavMain() {
+
+    let { setRandomUsers, randomUsers} = useGeneralStore()
+
+    const contextUser = useUser()
     
     const pathname = usePathname();
 
-    
+    useEffect(() => { setRandomUsers() }, [])
 
     return (
         <>
             <div id="SideNavMain" className={`fixed z-20 bg-white pt-[70px] h-full lg:border-r-0 border-r-1 border-r w-[75px] overflow-auto ${pathname === '/' ? 'lg:w-[310px]' : 'lg:w-[220px]'}`}>
                 <div className="lg:w-full w-[55px] mx-auto">
-                    <a href="http://">
+                    <Link href="http://">
                         <MenuItem iconString="Pour Toi"
                             colorString={pathname == '/' ? '#F02C56' : ''}
                             sizeString="25"/>
-                    </a>
+                    </Link>
                     <MenuItem iconString="Suivis" colorString="#000000" sizeString="25" />
                     <MenuItem iconString="Live" colorString="#000000" sizeString="25" />
 
@@ -28,12 +36,12 @@ export default function SideNavMain() {
 
                     <div className="lg:hidden block pt-3"/>
 
-                    <ClientOnly >
+                    <ClientOnly>
                         <div className="cursor-pointer">
-                            <MenuItemFollow user={ { id: "1", name: "Test user", image:"https://placehold.co/50"}} />
-                                    
-                        </div>                    
-
+                            {randomUsers?.map((user, index) => ( 
+                                <MenuItemFollow key={index} user={user} /> 
+                            ))}
+                        </div>
                     </ClientOnly>
 
                     <button className="lg:block hidden text-[#F02C56] pt-1.5 pl-1.5 pl-2 text-[13px]">
@@ -41,7 +49,7 @@ export default function SideNavMain() {
 
                     </button>
 
-                    {true ? (
+                    {contextUser?.user?.id ?  (
                         <div>
 
                             <div className="border-b lg:ml-2 mt-2" />
@@ -49,12 +57,12 @@ export default function SideNavMain() {
 
                             <div className="lg:hidden block pt-3"/>
 
-                            <ClientOnly >
+                            <ClientOnly>
                                 <div className="cursor-pointer">
-                                    <MenuItemFollow user={{ id: "1", name: "Test user", image:"https://placehold.co/50"}} />
-                                            
-                                </div>           
-
+                                    {randomUsers?.map((user, index) => ( 
+                                        <MenuItemFollow key={index} user={user} /> 
+                                    ))}
+                                </div>
                             </ClientOnly>
 
                             <button className="lg:block hidden text-[#F02C56] pt-1.5 pl-1.5 pl-2 text-[13px]">
@@ -72,7 +80,7 @@ export default function SideNavMain() {
                         <p className="pt-4 px-2">A propos Nouvelles RSF Boutique Contact Cariere </p>
                         <p className="pt-4 px-2">The real south face</p>
                         <p className="pt-4 px-2"> Respectez les regles</p>
-                        <p className="pt-4 px-2">Copyright 2023 RSF</p>
+                        <p className="pt-4 px-2">© Copyright 2023 RSF</p>
 
                     </div>
                 </div>
